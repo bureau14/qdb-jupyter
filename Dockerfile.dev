@@ -1,0 +1,29 @@
+
+FROM jupyter/scipy-notebook
+
+USER root
+
+# Add C API
+ADD ./qdb-*-c-api.tar.gz /usr
+RUN ldconfig
+
+# Install QuasarDB Python module
+COPY quasardb-*.whl .
+
+RUN apt update && apt install -y cmake g++
+RUN pip install wheel
+RUN pip install ./*.whl
+RUN rm quasardb-*.whl
+
+# Install Jupyter things
+RUN  pip install quandl
+RUN pip install papermill[all]
+RUN pip install httpie
+RUN pip install plotly[all]
+
+ADD ./notebooks-jupyter/ /home/jovyan/work/
+
+RUN fix-permissions /home/jovyan
+
+USER jovyan
+WORKDIR    /home/jovyan/work
