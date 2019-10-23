@@ -35,7 +35,7 @@ Run first the  QuasarDb server
 
 Then run the image just built
 
-    docker run -it --link qdb-server:qdb-server bureau14/scipy:0.0
+    docker run -it -p 8888:8888 --link qdb-server:qdb-server bureau14/scipy:0.0
 
 You should be prompted to copy paste a link in your browser to access the jupyter notebook server
 
